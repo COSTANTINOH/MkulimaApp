@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:shop_app/routes.dart';
 import 'package:shop_app/screens/home/home_screen.dart';
 import 'package:shop_app/screens/sign_in/sign_in_screen.dart';
@@ -22,15 +23,36 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   bool splash = false;
 
+  // _saveFirstTime() async {
+  //   final prefs = await SharedPreferences.getInstance();
+  //   final key = 'ftime';
+  //   final value = "true";
+  //   prefs.setString(key, value);
+
+  //   final pref = await SharedPreferences.getInstance();
+  //   final keys = 'ftime';
+  //   final values = pref.get(keys) ?? 0;
+
+  //   if (values == 0) {
+  //     setState(() {
+  //       splash = true;
+  //     });
+  //   } else {
+  //     setState(() {
+  //       splash = false;
+  //     });
+  //     Navigator.push(
+  //       context,
+  //       MaterialPageRoute(
+  //         builder: (context) => HomeScreen(),
+  //       ),
+  //     );
+  //   }
+  // }
+
   @override
   void initState() {
-    LocalStorage.getBoolItem('splash').then((value) {
-      if (value) {
-        setState(() {
-          splash = value;
-        });
-      }
-    });
+    // _saveFirstTime();
     super.initState();
   }
 

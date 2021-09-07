@@ -20,6 +20,9 @@ dependencies:
   flutter_sfsymbols:
   shared_preferences:
   url_launcher:
+  fluttertoast: ^3.1.0
+  http:
+
   
 
 
