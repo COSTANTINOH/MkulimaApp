@@ -22,12 +22,8 @@ class TitleBanner extends StatelessWidget {
       ),
       child: Center(
         child: Text(
-          "Zenji Plaza",
-          style: TextStyle(
-            fontSize: getProportionateScreenWidth(24),
-            fontWeight: FontWeight.bold,
-            color: Colors.black
-          ),
+          "Mkulima",
+          style: TextStyle(fontSize: getProportionateScreenWidth(24), fontWeight: FontWeight.bold, color: Colors.black),
         ),
       ),
     );

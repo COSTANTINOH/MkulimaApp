@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:shop_app/routes.dart';
+import 'package:shop_app/screens/home/home_screen.dart';
 import 'package:shop_app/screens/sign_in/sign_in_screen.dart';
 import 'package:shop_app/screens/splash/splash_screen.dart';
 import 'package:shop_app/services/shared/splash_shared.dart';
+import 'package:shop_app/size_config.dart';
 import 'package:shop_app/theme.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(
+    MyApp(),
+  );
 }
 
 class MyApp extends StatefulWidget {
@@ -21,7 +25,6 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     LocalStorage.getBoolItem('splash').then((value) {
-      print("splash# $value");
       if (value) {
         setState(() {
           splash = value;
@@ -35,11 +38,12 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Zenji Plaza',
+      title: 'Mkulima',
       theme: theme(),
       // home: SplashScreen(),
       // We use routeName so that we dont need to remember the name
       initialRoute: splash ? SignInScreen.routeName : SplashScreen.routeName,
+      // initialRoute: HomeScreen.routeName,
       routes: routes,
     );
   }

@@ -17,16 +17,24 @@ class Body extends StatelessWidget {
         physics: physics,
         child: Column(
           children: [
-            SizedBox(height: getProportionateScreenHeight(20)),
+            SizedBox(
+              height: getProportionateScreenHeight(20.0),
+            ),
             HomeHeader(),
-            SizedBox(height: getProportionateScreenWidth(10)),
+            SizedBox(
+              height: getProportionateScreenWidth(10.0),
+            ),
             TitleBanner(),
-            DiscountBanner(),
+            // DiscountBanner(),
             Categories(),
-            SpecialOffers(),
-            SizedBox(height: getProportionateScreenWidth(30)),
+            // SpecialOffers(),
+            SizedBox(
+              height: getProportionateScreenWidth(30.0),
+            ),
             PopularProducts(),
-            SizedBox(height: getProportionateScreenWidth(30)),
+            SizedBox(
+              height: getProportionateScreenWidth(30),
+            ),
             PromotedProducts(),
             // SizedBox(height: getProportionateScreenWidth(30)),
           ],
