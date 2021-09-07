@@ -27,10 +27,10 @@ List<Product> demoProducts = [
   Product(
     id: 1,
     images: [
-      "assets/images/ps4_console_white_1.png",
-      "assets/images/ps4_console_white_2.png",
-      "assets/images/ps4_console_white_3.png",
-      "assets/images/ps4_console_white_4.png",
+      "assets/images/product.png",
+      "assets/images/product.png",
+      "assets/images/product.png",
+      "assets/images/product.png",
     ],
     colors: [
       Color(0xFFF6625E),
@@ -48,7 +48,7 @@ List<Product> demoProducts = [
   Product(
     id: 2,
     images: [
-      "assets/images/Image Popular Product 2.png",
+      "assets/images/product.png",
     ],
     colors: [
       Color(0xFFF6625E),
@@ -83,7 +83,7 @@ List<Product> demoProducts = [
   Product(
     id: 4,
     images: [
-      "assets/images/wireless headset.png",
+      "assets/images/product.png",
     ],
     colors: [
       Color(0xFFF6625E),
@@ -103,10 +103,10 @@ List<Product> demoProductsPopular = [
   Product(
     id: 11,
     images: [
-      "assets/images/ps4_console_white_1.png",
-      "assets/images/ps4_console_white_2.png",
-      "assets/images/ps4_console_white_3.png",
-      "assets/images/ps4_console_white_4.png",
+      "assets/images/product.png",
+      "assets/images/product.png",
+      "assets/images/product.png",
+      "assets/images/product.png",
     ],
     colors: [
       Color(0xFFF6625E),
@@ -175,6 +175,4 @@ List<Product> demoProductsPopular = [
   ),
 ];
 
-
-const String description =
-    "Wireless Controller for PS4™ gives you what you want in your gaming from over precision control your games to sharing …";
+const String description = "Wireless Controller for PS4™ gives you what you want in your gaming from over precision control your games to sharing …";
