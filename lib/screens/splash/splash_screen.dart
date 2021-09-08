@@ -1,7 +1,10 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:shop_app/screens/home/home_screen.dart';
 import 'package:shop_app/screens/splash/components/body.dart';
+import 'package:shop_app/screens/widget/metrics.dart';
 import 'package:shop_app/size_config.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -35,7 +38,17 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   void initState() {
-    _saveFirstTime();
+    // _saveFirstTime();
+    Timer(
+      Duration(seconds: 5),
+      () => Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (context) => HomeScreen(),
+        ),
+      ),
+    );
+
     super.initState();
   }
 
@@ -44,7 +57,60 @@ class _SplashScreenState extends State<SplashScreen> {
     // You have to call it on your starting screen
     SizeConfig().init(context);
     return Scaffold(
-      body: Body(),
+      body: Stack(
+        children: <Widget>[
+          Image.asset(
+            "assets/images/back.jpg",
+            width: MediaQuery.of(context).size.width,
+            height: MediaQuery.of(context).size.height,
+            fit: BoxFit.cover,
+          ),
+          // Center(
+          //   child: Text(
+          //     "This is a Flutter Example",
+          //     style: TextStyle(
+          //       fontWeight: FontWeight.bold,
+          //       fontSize: 28.0,
+          //       color: Colors.red,
+          //     ),
+          //   ),
+          // ),
+
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Align(
+              alignment: Alignment.bottomCenter,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: CircularProgressIndicator(
+                      backgroundColor: Colors.white,
+                    ),
+                  ),
+                  manualStepper(
+                    step: 10,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      "Mkulima v 1.0",
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 15.0,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
