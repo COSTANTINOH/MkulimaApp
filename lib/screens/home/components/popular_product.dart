@@ -42,7 +42,7 @@ class PopularProducts extends StatelessWidget {
         Padding(
           padding: EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(20)),
           child: SectionTitle(
-              title: "Popular Products",
+              title: "Bidhaa Mpya",
               press: () {
                 Navigator.push(
                   context,
@@ -58,7 +58,9 @@ class PopularProducts extends StatelessWidget {
             future: getProductCategory(),
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
-                return Center(child: CircularProgressIndicator(),);
+                return Center(
+                  child: CircularProgressIndicator(),
+                );
               } else if (snapshot.hasError || !snapshot.hasData) {
                 return Center(
                   child: Text("No Data"),
@@ -69,6 +71,7 @@ class PopularProducts extends StatelessWidget {
                 return ListView.builder(
                   scrollDirection: Axis.horizontal,
                   itemCount: snapshot.data.length,
+                  physics: BouncingScrollPhysics(),
                   itemBuilder: (_, index) {
                     // return Text("${snapshot.data[index].id}");
                     return Padding(

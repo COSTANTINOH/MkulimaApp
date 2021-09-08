@@ -31,21 +31,29 @@ class ProductDescription extends StatelessWidget {
         Align(
           alignment: Alignment.centerRight,
           child: Container(
-            padding: EdgeInsets.all(getProportionateScreenWidth(15)),
-            width: getProportionateScreenWidth(64),
-            decoration: BoxDecoration(
-              color: Color(0xFFF5F6F9),
-              borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(20),
-                bottomLeft: Radius.circular(20),
+              padding: EdgeInsets.all(getProportionateScreenWidth(15)),
+              width: getProportionateScreenWidth(150),
+              decoration: BoxDecoration(
+                color: Color(0xFFF5F6F9),
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(20),
+                  bottomLeft: Radius.circular(20),
+                ),
               ),
-            ),
-            child: SvgPicture.asset(
-              "assets/icons/Heart Icon_2.svg",
-              color: Color(0xFFDBDEE4),
-              height: getProportionateScreenWidth(16),
-            ),
-          ),
+              child: Text(
+                "Bado Inapatikana",
+                style: TextStyle(
+                  color: Colors.green,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 15.0,
+                ),
+              )
+              // SvgPicture.asset(
+              //   "assets/icons/Heart Icon_2.svg",
+              //   color: Color(0xFFDBDEE4),
+              //   height: getProportionateScreenWidth(16),
+              // ),
+              ),
         ),
         Padding(
           padding: EdgeInsets.only(

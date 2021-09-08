@@ -39,7 +39,7 @@ class PromotedProducts extends StatelessWidget {
       children: [
         Padding(
           padding: EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(20)),
-          child: SectionTitle(title: "Promoted Products", press: () {}),
+          child: SectionTitle(title: "Mazao Pendekezwa", press: () {}),
         ),
         SizedBox(height: getProportionateScreenWidth(20)),
         Container(
@@ -62,6 +62,7 @@ class PromotedProducts extends StatelessWidget {
                 return ListView.builder(
                   scrollDirection: Axis.horizontal,
                   itemCount: snapshot.data.length,
+                  physics: BouncingScrollPhysics(),
                   itemBuilder: (_, index) {
                     // return Text("${snapshot.data[index].id}");
                     return Padding(
