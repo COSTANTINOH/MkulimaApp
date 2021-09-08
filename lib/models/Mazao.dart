@@ -20,6 +20,7 @@ class Mazao {
     this.city,
     this.status,
     this.farmerId,
+    this.descprition
   });
 
   String id;
@@ -32,6 +33,7 @@ class Mazao {
   String city;
   String status;
   String farmerId;
+  String descprition;
 
   factory Mazao.fromJson(Map<String, dynamic> json) => Mazao(
         id: json["id"],
@@ -44,6 +46,7 @@ class Mazao {
         city: json["city"],
         status: json["status"],
         farmerId: json["farmer_id"],
+        descprition : json["descprition"]
       );
 
   Map<String, dynamic> toJson() => {
@@ -57,5 +60,6 @@ class Mazao {
         "city": city,
         "status": status,
         "farmer_id": farmerId,
+        "descprition" :descprition
       };
 }

@@ -50,10 +50,13 @@ class ProductCard extends StatelessWidget {
                         color: kSecondaryColor.withOpacity(0.1),
                         borderRadius: BorderRadius.circular(15),
                       ),
-                      child: Hero(
-                        tag: mazao.id.toString(),
-                        child: Image.asset("assets/images/product.png"),
+                      child: Image(
+                        image: AssetImage('assets/images/product.png'),
                       ),
+                      //  Hero(
+                      //   tag: mazao.id.toString() + ,
+                      //   child: ,
+                      // ),
                     ),
                   ),
                   const SizedBox(height: 10),

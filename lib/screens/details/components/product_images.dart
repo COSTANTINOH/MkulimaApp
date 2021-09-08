@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shop_app/models/Mazao.dart';
 import 'package:shop_app/models/Product.dart';
 
 import '../../../constants.dart';
@@ -10,7 +11,7 @@ class ProductImages extends StatefulWidget {
     @required this.product,
   }) : super(key: key);
 
-  final Product product;
+  final Mazao product;
 
   @override
   _ProductImagesState createState() => _ProductImagesState();
@@ -26,20 +27,18 @@ class _ProductImagesState extends State<ProductImages> {
           width: getProportionateScreenWidth(238),
           child: AspectRatio(
             aspectRatio: 1,
-            child: Hero(
-              tag: widget.product.id.toString(),
-              child: Image.asset(widget.product.images[selectedImage]),
+            child: Image(
+              image: AssetImage('assets/images/product.png'),
             ),
           ),
         ),
-        // SizedBox(height: getProportionateScreenWidth(20)),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            ...List.generate(widget.product.images.length,
-                (index) => buildSmallProductPreview(index)),
-          ],
-        )
+        SizedBox(height: getProportionateScreenWidth(20)),
+        // Row(
+        //   mainAxisAlignment: MainAxisAlignment.center,
+        //   children: [
+        //     ...List.generate(widget.product.images.length, (index) => buildSmallProductPreview(index)),
+        //   ],
+        // )
       ],
     );
   }
@@ -60,10 +59,9 @@ class _ProductImagesState extends State<ProductImages> {
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(10),
-          border: Border.all(
-              color: kPrimaryColor.withOpacity(selectedImage == index ? 1 : 0)),
+          border: Border.all(color: kPrimaryColor.withOpacity(selectedImage == index ? 1 : 0)),
         ),
-        child: Image.asset(widget.product.images[index]),
+        child: Image.asset("assets/images/product.png"),
       ),
     );
   }

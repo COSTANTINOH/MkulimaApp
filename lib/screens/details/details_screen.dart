@@ -14,8 +14,8 @@ class DetailsScreen extends StatelessWidget {
         ModalRoute.of(context).settings.arguments;
     return Scaffold(
       backgroundColor: Color(0xFFF5F6F9),
-      // appBar: CustomAppBar(rating: agrs.product.rating),
-      // body: Body(product: agrs.mazao),
+      appBar: CustomAppBar(rating: 2.0),
+      body: Body(product: agrs.product),
     );
   }
 }
