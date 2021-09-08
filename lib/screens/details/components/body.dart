@@ -4,6 +4,7 @@ import 'package:shop_app/models/Mazao.dart';
 import 'package:shop_app/models/Product.dart';
 import 'package:shop_app/screens/widget/metrics.dart';
 import 'package:shop_app/size_config.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import 'color_dots.dart';
 import 'product_description.dart';
@@ -53,7 +54,7 @@ class Body extends StatelessWidget {
                             manualStepper(step: 5),
                             DefaultButton(
                               text: "Wasiliana Mkulima",
-                              press: () {},
+                              press: () => launch("tel://${product.phone}"),
                               icon: Icons.phone,
                             ),
                           ],

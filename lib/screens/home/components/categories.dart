@@ -63,10 +63,10 @@ class Categories extends StatelessWidget {
                 // return Text("${snapshot.data}");
                 print("lenght ${snapshot.data}");
                 return ListView.builder(
+                  physics: BouncingScrollPhysics(),
                   scrollDirection: Axis.horizontal,
                   itemCount: snapshot.data.length,
                   itemBuilder: (_, index) {
-                    // return Text("${snapshot.data[index].id}");
                     return Padding(
                       padding: EdgeInsets.only(left: getProportionateScreenWidth(20)),
                       child: CategoryCard(

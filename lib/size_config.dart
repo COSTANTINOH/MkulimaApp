@@ -19,7 +19,6 @@ class SizeConfig {
 double getProportionateScreenHeight(double inputHeight) {
   double screenHeight = SizeConfig.screenHeight;
   // 812 is the layout height that designer use
-  print("data# $screenHeight");
   return (inputHeight / 812.0) * screenHeight;
 }
 

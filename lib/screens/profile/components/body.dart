@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:shop_app/screens/home/home_screen.dart';
+import 'package:shop_app/services/shared/splash_shared.dart';
 
 import 'profile_menu.dart';
 import 'profile_pic.dart';
@@ -33,9 +36,26 @@ class Body extends StatelessWidget {
             press: () {},
           ),
           ProfileMenu(
-            text: "Log Out",
+            text: "Toka kwenye akaunti",
             icon: "assets/icons/Log out.svg",
-            press: () {},
+            press: () {
+              LocalStorage.removeItem("login");
+              LocalStorage.removeItem("id");
+
+              Navigator.pushNamed(
+                context,
+                HomeScreen.routeName,
+              );
+
+              return Fluttertoast.showToast(
+                msg: "Umetoka nje ya akaunt yako",
+                toastLength: Toast.LENGTH_LONG,
+                gravity: ToastGravity.BOTTOM,
+                timeInSecForIos: 1,
+                backgroundColor: Colors.red,
+                textColor: Colors.white,
+              );
+            },
           ),
         ],
       ),

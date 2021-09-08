@@ -67,6 +67,7 @@ class CustomBottomNavBar extends StatelessWidget {
                 final prefs = await SharedPreferences.getInstance();
                 final key = 'login';
                 final value = prefs.get(key) ?? 0;
+
                 if (value == 0) {
                   Navigator.pushNamed(
                     context,

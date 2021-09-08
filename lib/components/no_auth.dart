@@ -3,6 +3,7 @@ import 'package:shop_app/components/coustom_bottom_nav_bar.dart';
 import 'package:shop_app/components/default_button.dart';
 import 'package:shop_app/enums.dart';
 import 'package:shop_app/screens/login_success/login_success_screen.dart';
+import 'package:shop_app/screens/sign_in/sign_in_screen.dart';
 import 'package:shop_app/screens/sign_up/sign_up_screen.dart';
 import 'package:shop_app/screens/widget/metrics.dart';
 
@@ -60,7 +61,7 @@ class NoAuthBanner extends StatelessWidget {
                       press: () {
                         Navigator.pushNamed(
                           context,
-                          LoginSuccessScreen.routeName,
+                          SignInScreen.routeName,
                         );
                       },
                     ),

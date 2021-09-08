@@ -10,6 +10,7 @@ import 'package:shop_app/screens/forgot_password/forgot_password_screen.dart';
 import 'package:shop_app/screens/home/home_screen.dart';
 import 'package:shop_app/screens/login_success/login_success_screen.dart';
 import 'package:http/http.dart' as http;
+import 'package:shop_app/services/shared/splash_shared.dart';
 import '../../../components/default_button.dart';
 import '../../../constants.dart';
 import '../../../size_config.dart';
@@ -48,17 +49,21 @@ class _SignFormState extends State<SignForm> {
   bool isregistered = false;
 
   _saveLogin(String token) async {
-    final prefs = await SharedPreferences.getInstance();
     final key = 'login';
     final value = token;
-    prefs.setString(key, value);
+    LocalStorage.setStringItem(key, value);
   }
 
   _saveLoginID(String token) async {
-    final prefs = await SharedPreferences.getInstance();
     final key = 'userId';
     final value = token;
-    prefs.setString(key, value);
+    LocalStorage.setStringItem(key, value);
+  }
+
+  _saveLoginTagFarmer(String token) async {
+    final key = 'tag';
+    final value = token;
+    LocalStorage.setStringItem(key, value);
   }
 
   Future<dynamic> login(String phone, String password) async {
@@ -96,8 +101,11 @@ class _SignFormState extends State<SignForm> {
             passwordController.text = "";
           },
         );
-        _saveLogin(json[0]['username']);
+        _saveLogin(json[0]['name']);
         _saveLoginID(json[0]['id']);
+        if (json[0]["tag"] != null) {
+          _saveLoginTagFarmer(json[0]["tag"]);
+        }
         Navigator.pushNamed(
           context,
           HomeScreen.routeName,

@@ -13,7 +13,6 @@ class LocalStorage {
 
   static Future<bool> setBoolItem(String key, bool value) async {
     final prefs = await SharedPreferences.getInstance();
-    print("data# $key $value");
     return prefs.setBool(key, value);
   }
 
