@@ -1,12 +1,15 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:shop_app/components/custom_surfix_icon.dart';
 import 'package:shop_app/components/default_button.dart';
 import 'package:shop_app/components/form_error.dart';
 import 'package:shop_app/screens/complete_profile/complete_profile_screen.dart';
-
+import 'package:http/http.dart' as http;
+import 'package:shop_app/screens/login_success/login_success_screen.dart';
 import '../../../constants.dart';
 import '../../../size_config.dart';
-
 
 class SignUpForm extends StatefulWidget {
   @override
@@ -33,6 +36,83 @@ class _SignUpFormState extends State<SignUpForm> {
       setState(() {
         errors.remove(error);
       });
+  }
+
+  bool isregistered = false;
+
+  TextEditingController xfname = TextEditingController();
+
+  TextEditingController xphone = TextEditingController();
+
+  TextEditingController xpassword = TextEditingController();
+
+  TextEditingController xlocation = TextEditingController();
+
+  Future<dynamic> register(String fname, String phone, String password, String username) async {
+    String myApi = "https://mkulima90.000webhostapp.com/admin/api/register.php";
+    final response = await http.post(myApi, headers: {
+      'Accept': 'application/json'
+    }, body: {
+      "fname": "$fname",
+      "phone": "$phone",
+      "password": "$password",
+      "username": "$username",
+    });
+    if (response.statusCode == 200) {
+      var jsonResponse = json.decode(response.body);
+
+      if (jsonResponse != null && jsonResponse != 404 && jsonResponse != 500) {
+        // var json = jsonDecode(response.body);
+        setState(() {
+          isregistered = false;
+          xfname.text = "";
+          xpassword.text = "";
+          xfname.text = "";
+          xpassword.text = "";
+        });
+        Navigator.pushNamed(
+          context,
+          LoginSuccessScreen.routeName,
+        );
+        return Fluttertoast.showToast(
+            msg: "Akaunti yako imefanikiwa kutengenezwa",
+            toastLength: Toast.LENGTH_LONG,
+            gravity: ToastGravity.BOTTOM,
+            timeInSecForIos: 1,
+            backgroundColor: Colors.red,
+            textColor: Colors.white);
+      } else if (jsonResponse == 404) {
+        setState(() {
+          isregistered = false;
+        });
+        return Fluttertoast.showToast(
+            msg: "Namba ya simu ishatumika",
+            toastLength: Toast.LENGTH_LONG,
+            gravity: ToastGravity.BOTTOM,
+            timeInSecForIos: 1,
+            backgroundColor: Colors.red,
+            textColor: Colors.white);
+      } else if (jsonResponse == 500) {
+        setState(() {
+          isregistered = false;
+        });
+        return Fluttertoast.showToast(
+            msg: "Server Error Please Try Again Later",
+            toastLength: Toast.LENGTH_LONG,
+            gravity: ToastGravity.BOTTOM,
+            timeInSecForIos: 1,
+            backgroundColor: Colors.red,
+            textColor: Colors.white);
+      }
+    } else {
+      return Fluttertoast.showToast(
+          msg: "Server Error Please Try Again Later",
+          toastLength: Toast.LENGTH_LONG,
+          gravity: ToastGravity.BOTTOM,
+          timeInSecForIos: 1,
+          backgroundColor: Colors.red,
+          textColor: Colors.white);
+    }
   }
 
   @override
@@ -131,7 +211,7 @@ class _SignUpFormState extends State<SignUpForm> {
     );
   }
 
-   TextFormField buildPhoneFormField() {
+  TextFormField buildPhoneFormField() {
     return TextFormField(
       keyboardType: TextInputType.phone,
       onSaved: (newValue) => email = newValue,

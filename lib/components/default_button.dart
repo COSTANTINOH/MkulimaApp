@@ -19,24 +19,32 @@ class DefaultButton extends StatelessWidget {
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
         color: kPrimaryColor,
         onPressed: press,
-        child: Row(
-          children: [
-            Icon(
-              icon,
-              color: Colors.white,
-            ),
-            manualSpacer(
-              step: 10,
-            ),
-            Text(
-              text,
-              style: TextStyle(
-                fontSize: getProportionateScreenWidth(18),
-                color: Colors.white,
+        child: icon == null
+            ? Text(
+                text,
+                style: TextStyle(
+                  fontSize: getProportionateScreenWidth(18),
+                  color: Colors.white,
+                ),
+              )
+            : Row(
+                children: [
+                  Icon(
+                    icon,
+                    color: Colors.white,
+                  ),
+                  manualSpacer(
+                    step: 10,
+                  ),
+                  Text(
+                    text,
+                    style: TextStyle(
+                      fontSize: getProportionateScreenWidth(18),
+                      color: Colors.white,
+                    ),
+                  ),
+                ],
               ),
-            ),
-          ],
-        ),
       ),
     );
   }
