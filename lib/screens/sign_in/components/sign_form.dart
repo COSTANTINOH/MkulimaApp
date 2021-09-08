@@ -43,9 +43,13 @@ class _SignFormState extends State<SignForm> {
       });
   }
 
+  TextEditingController phoneController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+  bool isregistered = false;
+
   _saveLogin(String token) async {
     final prefs = await SharedPreferences.getInstance();
-    final key = 'username';
+    final key = 'login';
     final value = token;
     prefs.setString(key, value);
   }
@@ -58,29 +62,45 @@ class _SignFormState extends State<SignForm> {
   }
 
   Future<dynamic> login(String phone, String password) async {
-    print("login");
-    String myApi = "http://192.168.1.59/mkulima/admin/api/login.php/";
-    final response = await http.post(myApi, headers: {'Accept': 'application/json'}, body: {"username": "$phone", "password": "$password"});
+    if (phone == "" || password == "") {
+      setState(() {
+        isregistered = false;
+      });
+
+      return Fluttertoast.showToast(
+          msg: "Tafadhari weka taarifa zote",
+          toastLength: Toast.LENGTH_LONG,
+          gravity: ToastGravity.BOTTOM,
+          timeInSecForIos: 1,
+          backgroundColor: Colors.red,
+          textColor: Colors.white);
+    }
+    String myApi = "https://mkulima90.000webhostapp.com/admin/api/login.php/";
+    final response = await http.post(
+      myApi,
+      headers: {'Accept': 'application/json'},
+      body: {
+        "phone": "$phone",
+        "password": "$password",
+      },
+    );
 
     if (response.statusCode == 200) {
-      print("yes");
       var jsonResponse = json.decode(response.body);
       if (jsonResponse != null && jsonResponse != 404 && jsonResponse != 500) {
         var json = jsonDecode(response.body);
         setState(
           () {
-            load = false;
-            _phone.text = "";
-            _password.text = "";
+            isregistered = false;
+            phoneController.text = "";
+            passwordController.text = "";
           },
         );
         _saveLogin(json[0]['username']);
         _saveLoginID(json[0]['id']);
-        Navigator.push(
+        Navigator.pushNamed(
           context,
-          MaterialPageRoute(
-            builder: (context) => HomeScreen(),
-          ),
+          HomeScreen.routeName,
         );
         return Fluttertoast.showToast(
           msg: "Welcome to your account",
@@ -93,7 +113,7 @@ class _SignFormState extends State<SignForm> {
       } else if (jsonResponse == 404) {
         setState(
           () {
-            load = false;
+            isregistered = false;
           },
         );
         return Fluttertoast.showToast(
@@ -106,7 +126,7 @@ class _SignFormState extends State<SignForm> {
         );
       } else if (jsonResponse == 500) {
         setState(() {
-          load = false;
+          isregistered = false;
         });
         return Fluttertoast.showToast(
           msg: "Server Error Please Try Again Later",
@@ -120,7 +140,7 @@ class _SignFormState extends State<SignForm> {
     } else {
       setState(
         () {
-          load = false;
+          isregistered = false;
         },
       );
       print("no data");
@@ -164,14 +184,9 @@ class _SignFormState extends State<SignForm> {
           FormError(errors: errors),
           SizedBox(height: getProportionateScreenHeight(20)),
           DefaultButton(
-            text: "Continue",
-            press: () {
-              if (_formKey.currentState.validate()) {
-                _formKey.currentState.save();
-                // if all are valid then go to success screen
-                KeyboardUtil.hideKeyboard(context);
-                Navigator.pushNamed(context, LoginSuccessScreen.routeName);
-              }
+            text: isregistered ? "Inatuma maombi" : "Ingia",
+            press: () async {
+              await login(phoneController.text, passwordController.text);
             },
           ),
         ],
@@ -182,30 +197,10 @@ class _SignFormState extends State<SignForm> {
   TextFormField buildPasswordFormField() {
     return TextFormField(
       obscureText: true,
-      onSaved: (newValue) => password = newValue,
-      onChanged: (value) {
-        if (value.isNotEmpty) {
-          removeError(error: kPassNullError);
-        } else if (value.length >= 8) {
-          removeError(error: kShortPassError);
-        }
-        return null;
-      },
-      validator: (value) {
-        if (value.isEmpty) {
-          addError(error: kPassNullError);
-          return "";
-        } else if (value.length < 8) {
-          addError(error: kShortPassError);
-          return "";
-        }
-        return null;
-      },
+      controller: passwordController,
       decoration: InputDecoration(
         labelText: "Neno la siri",
         hintText: "Ingiza neno la siri",
-        // If  you are using latest version of flutter then lable text and hint text shown like this
-        // if you r using flutter less then 1.20.* then maybe this is not working properly
         floatingLabelBehavior: FloatingLabelBehavior.always,
         suffixIcon: CustomSurffixIcon(svgIcon: "assets/icons/Lock.svg"),
       ),
@@ -215,25 +210,10 @@ class _SignFormState extends State<SignForm> {
   TextFormField buildEmailFormField() {
     return TextFormField(
       keyboardType: TextInputType.phone,
-      onSaved: (newValue) => email = newValue,
-      onChanged: (value) {
-        if (value.isNotEmpty) {
-          removeError(error: kPhoneNullError);
-        }
-        return null;
-      },
-      validator: (value) {
-        if (value.isEmpty) {
-          addError(error: kPhoneNullError);
-          return "";
-        }
-        return null;
-      },
+      controller: phoneController,
       decoration: InputDecoration(
         labelText: "Namba ya simu",
         hintText: "Ingiza namba ya simu",
-        // If  you are using latest version of flutter then lable text and hint text shown like this
-        // if you r using flutter less then 1.20.* then maybe this is not working properly
         floatingLabelBehavior: FloatingLabelBehavior.always,
         suffixIcon: CustomSurffixIcon(svgIcon: "assets/icons/Call.svg"),
       ),

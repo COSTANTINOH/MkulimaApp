@@ -48,15 +48,33 @@ class _SignUpFormState extends State<SignUpForm> {
 
   TextEditingController xlocation = TextEditingController();
 
-  Future<dynamic> register(String fname, String phone, String password, String username) async {
-    String myApi = "https://mkulima90.000webhostapp.com/admin/api/register.php";
+  Future<dynamic> register(String fname, String phone, String password, String location) async {
+    String myApi = "https://mkulima90.000webhostapp.com/admin/api/register.php/";
+    setState(() {
+      isregistered = true;
+    });
+
+    if (fname == "" || phone == "" || password == "" || location == "") {
+      setState(() {
+        isregistered = false;
+      });
+
+      return Fluttertoast.showToast(
+          msg: "Tafadhari weka taarifa zote",
+          toastLength: Toast.LENGTH_LONG,
+          gravity: ToastGravity.BOTTOM,
+          timeInSecForIos: 1,
+          backgroundColor: Colors.red,
+          textColor: Colors.white);
+    }
+
     final response = await http.post(myApi, headers: {
       'Accept': 'application/json'
     }, body: {
       "fname": "$fname",
       "phone": "$phone",
       "password": "$password",
-      "username": "$username",
+      "location": "$location",
     });
     if (response.statusCode == 200) {
       var jsonResponse = json.decode(response.body);
@@ -65,11 +83,11 @@ class _SignUpFormState extends State<SignUpForm> {
         // var json = jsonDecode(response.body);
         setState(() {
           isregistered = false;
-          xfname.text = "";
-          xpassword.text = "";
-          xfname.text = "";
-          xpassword.text = "";
         });
+        xfname.clear();
+        xpassword.clear();
+        xfname.clear();
+        xlocation.clear();
         Navigator.pushNamed(
           context,
           LoginSuccessScreen.routeName,
@@ -131,13 +149,14 @@ class _SignUpFormState extends State<SignUpForm> {
           FormError(errors: errors),
           SizedBox(height: getProportionateScreenHeight(40)),
           DefaultButton(
-            text: "Continue",
-            press: () {
-              if (_formKey.currentState.validate()) {
-                _formKey.currentState.save();
-                // if all are valid then go to success screen
-                Navigator.pushNamed(context, CompleteProfileScreen.routeName);
-              }
+            text: isregistered ? "Inatuma Maombi" : "Jisajili",
+            press: () async {
+              await register(xfname.text, xphone.text, xpassword.text, xlocation.text);
+              // if (_formKey.currentState.validate()) {
+              //   _formKey.currentState.save();
+              //   // if all are valid then go to success screen
+              //   Navigator.pushNamed(context, CompleteProfileScreen.routeName);
+              // }
             },
           ),
         ],
@@ -147,33 +166,13 @@ class _SignUpFormState extends State<SignUpForm> {
 
   TextFormField buildConformPassFormField() {
     return TextFormField(
-      obscureText: true,
-      onSaved: (newValue) => conformpassword = newValue,
-      onChanged: (value) {
-        if (value.isNotEmpty) {
-          removeError(error: kPassNullError);
-        } else if (value.isNotEmpty && password == conformpassword) {
-          removeError(error: kMatchPassError);
-        }
-        conformpassword = value;
-      },
-      validator: (value) {
-        if (value.isEmpty) {
-          addError(error: kPassNullError);
-          return "";
-        } else if ((password != value)) {
-          addError(error: kMatchPassError);
-          return "";
-        }
-        return null;
-      },
+      obscureText: false,
+      controller: xlocation,
       decoration: InputDecoration(
-        labelText: "Confirm Password",
-        hintText: "Re-enter your password",
-        // If  you are using latest version of flutter then lable text and hint text shown like this
-        // if you r using flutter less then 1.20.* then maybe this is not working properly
+        labelText: "Eneo Unalotokea",
+        hintText: "Ingiza jina la eneo unalotokea",
         floatingLabelBehavior: FloatingLabelBehavior.always,
-        suffixIcon: CustomSurffixIcon(svgIcon: "assets/icons/Lock.svg"),
+        suffixIcon: CustomSurffixIcon(svgIcon: "assets/icons/Location point.svg"),
       ),
     );
   }
@@ -181,30 +180,10 @@ class _SignUpFormState extends State<SignUpForm> {
   TextFormField buildPasswordFormField() {
     return TextFormField(
       obscureText: true,
-      onSaved: (newValue) => password = newValue,
-      onChanged: (value) {
-        if (value.isNotEmpty) {
-          removeError(error: kPassNullError);
-        } else if (value.length >= 8) {
-          removeError(error: kShortPassError);
-        }
-        password = value;
-      },
-      validator: (value) {
-        if (value.isEmpty) {
-          addError(error: kPassNullError);
-          return "";
-        } else if (value.length < 8) {
-          addError(error: kShortPassError);
-          return "";
-        }
-        return null;
-      },
+      controller: xpassword,
       decoration: InputDecoration(
-        labelText: "Password",
-        hintText: "Enter your password",
-        // If  you are using latest version of flutter then lable text and hint text shown like this
-        // if you r using flutter less then 1.20.* then maybe this is not working properly
+        labelText: "Neno la siri",
+        hintText: "Ingiza neno la siri",
         floatingLabelBehavior: FloatingLabelBehavior.always,
         suffixIcon: CustomSurffixIcon(svgIcon: "assets/icons/Lock.svg"),
       ),
@@ -213,65 +192,26 @@ class _SignUpFormState extends State<SignUpForm> {
 
   TextFormField buildPhoneFormField() {
     return TextFormField(
-      keyboardType: TextInputType.phone,
-      onSaved: (newValue) => email = newValue,
-      onChanged: (value) {
-        if (value.isNotEmpty) {
-          removeError(error: kInvalidPhoneError);
-        }
-        return null;
-      },
-      validator: (value) {
-        if (value.isEmpty) {
-          addError(error: kInvalidPhoneError);
-          return "";
-        }
-        //  else if (!emailValidatorRegExp.hasMatch(value)) {
-        //   addError(error: kInvalidPhoneError);
-        //   return "";
-        // }
-        return null;
-      },
+      keyboardType: TextInputType.text,
+      controller: xfname,
       decoration: InputDecoration(
-        labelText: "Phone Number",
-        hintText: "Enter your phone number",
-        // If  you are using latest version of flutter then lable text and hint text shown like this
-        // if you r using flutter less then 1.20.* then maybe this is not working properly
+        labelText: "Jina Kamili",
+        hintText: "Ingiza jina kamili",
         floatingLabelBehavior: FloatingLabelBehavior.always,
-        suffixIcon: CustomSurffixIcon(svgIcon: "assets/icons/Call.svg"),
+        suffixIcon: CustomSurffixIcon(svgIcon: "assets/icons/User.svg"),
       ),
     );
   }
 
   TextFormField buildEmailFormField() {
     return TextFormField(
-      keyboardType: TextInputType.emailAddress,
-      onSaved: (newValue) => email = newValue,
-      onChanged: (value) {
-        if (value.isNotEmpty) {
-          removeError(error: kEmailNullError);
-        } else if (emailValidatorRegExp.hasMatch(value)) {
-          removeError(error: kInvalidEmailError);
-        }
-        return null;
-      },
-      validator: (value) {
-        if (value.isEmpty) {
-          addError(error: kEmailNullError);
-          return "";
-        } else if (!emailValidatorRegExp.hasMatch(value)) {
-          addError(error: kInvalidEmailError);
-          return "";
-        }
-        return null;
-      },
+      keyboardType: TextInputType.number,
+      controller: xphone,
       decoration: InputDecoration(
-        labelText: "Email",
-        hintText: "Enter your email",
-        // If  you are using latest version of flutter then lable text and hint text shown like this
-        // if you r using flutter less then 1.20.* then maybe this is not working properly
+        labelText: "Namba ya simu",
+        hintText: "Ingiza namba ya simu",
         floatingLabelBehavior: FloatingLabelBehavior.always,
-        suffixIcon: CustomSurffixIcon(svgIcon: "assets/icons/Mail.svg"),
+        suffixIcon: CustomSurffixIcon(svgIcon: "assets/icons/Call.svg"),
       ),
     );
   }
