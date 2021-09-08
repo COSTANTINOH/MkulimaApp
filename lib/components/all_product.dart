@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shop_app/models/Mazao.dart';
 import 'package:shop_app/models/Product.dart';
 import 'package:shop_app/screens/details/details_screen.dart';
 
@@ -14,7 +15,7 @@ class AllProductCard extends StatelessWidget {
   }) : super(key: key);
 
   final double width, aspectRetio;
-  final Product product;
+  final Mazao product;
 
   @override
   Widget build(BuildContext context) {
@@ -45,18 +46,13 @@ class AllProductCard extends StatelessWidget {
                       ),
                       child: Hero(
                         tag: product.id.toString(),
-                        child: Image.asset(product.images[0]),
+                        child: Image.asset("assets/images/product.png"),
                       ),
                     ),
                   ),
                 ),
                 const SizedBox(height: 10),
-                Text(
-                  product.title,
-                  style: TextStyle(color: Colors.black,fontSize: 12),
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis
-                ),
+                Text(product.name, style: TextStyle(color: Colors.black, fontSize: 12), maxLines: 1, overflow: TextOverflow.ellipsis),
                 // const SizedBox(height: 10),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,

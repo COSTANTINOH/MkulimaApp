@@ -40,7 +40,7 @@ class AllPopular extends StatelessWidget {
                 child: FadeInAnimation(
                   child: Padding(
                     padding: const EdgeInsets.all(1.0),
-                    child: AllProductCard(product: demoProductsPopular[i]),
+                    // child: AllProductCard(product: demoProductsPopular[i]),
                   ),
                 ),
               ),

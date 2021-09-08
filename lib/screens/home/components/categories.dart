@@ -52,7 +52,9 @@ class Categories extends StatelessWidget {
             future: getCategory(),
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
-                return Text("loading..");
+                return Center(
+                  child: CircularProgressIndicator(),
+                );
               } else if (snapshot.hasError || !snapshot.hasData) {
                 return Center(
                   child: Text("No Data"),
