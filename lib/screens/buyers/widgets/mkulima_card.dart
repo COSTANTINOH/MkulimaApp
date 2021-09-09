@@ -26,24 +26,55 @@ class _MkulimaCardState extends State<MkulimaCard> {
 
   @override
   Widget build(BuildContext context) {
-    return ListTile(
-      onTap: () => {},
-      leading: CircleAvatar(
-        radius: 30,
-        backgroundColor: Colors.transparent,
-        backgroundImage: AssetImage("assets/images/user.png"),
-      ),
-      title: Text(
-        "${widget.mkulima.name}",
-        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
-      ),
-      subtitle: Text("${widget.mkulima.location}"),
-      trailing: IconButton(
-        icon: Icon(
-          Icons.chat_bubble,
-          color: Colors.black45,
+    return Card(
+      elevation: 5,
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: ListTile(
+          onTap: () => {},
+          leading: CircleAvatar(
+            radius: 30,
+            backgroundColor: Colors.transparent,
+            backgroundImage: AssetImage(
+              "assets/images/user.png",
+            ),
+          ),
+          title: Text(
+            "${widget.mkulima.name}",
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+          ),
+          subtitle: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Text(
+                "${widget.mkulima.location}",
+                style: TextStyle(
+                  color: Colors.black54,
+                ),
+              ),
+              Text(
+                "${widget.mkulima.phone}",
+                style: TextStyle(
+                  color: Colors.black45,
+                ),
+              ),
+              Text(
+                "${widget.mkulima.email}",
+                style: TextStyle(
+                  color: Colors.black45,
+                ),
+              ),
+            ],
+          ),
+          trailing: IconButton(
+            icon: Icon(
+              Icons.chat_bubble,
+              color: Colors.black45,
+            ),
+            onPressed: () {},
+          ),
         ),
-        onPressed: () {},
       ),
     );
   }
