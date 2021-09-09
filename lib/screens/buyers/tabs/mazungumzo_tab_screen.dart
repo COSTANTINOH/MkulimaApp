@@ -1,5 +1,6 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:shop_app/screens/buyers/widgets/chat_item.dart';
 
 class PrivateChatListTab extends StatefulWidget {
   PrivateChatListTab();
@@ -57,8 +58,13 @@ class _PrivateChatListTabState extends State<PrivateChatListTab> {
                 return Row(
                   children: [
                     Expanded(
-                      child: Text(
-                        "message",
+                      child: ChatItem(
+                        name: listItem[index]['fullname'],
+                        count: listItem[index]['unseen'],
+                        time: listItem[index]['time'],
+                        color: listItem[index]['color'],
+                        lastMessage: listItem[index]['lastmessage'],
+                        text: listItem[index]['lastmessage'],
                       ),
                     ),
                   ],
@@ -67,7 +73,7 @@ class _PrivateChatListTabState extends State<PrivateChatListTab> {
             );
           } else {
             return Center(
-              child: Text("No message"),
+              child: CircularProgressIndicator(),
             );
           }
         },

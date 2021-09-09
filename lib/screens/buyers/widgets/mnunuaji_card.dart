@@ -36,7 +36,10 @@ class _MnunuajiCardState extends State<MnunuajiCard> {
             Navigator.pushNamed(
               context,
               ChatSectionScreen.routeName,
-              arguments: widget.mnunuaji,
+              arguments: ChatSectionScreen(
+                fname: widget.mnunuaji.fname,
+                id: widget.mnunuaji.id,
+              ),
             )
           },
           leading: CircleAvatar(

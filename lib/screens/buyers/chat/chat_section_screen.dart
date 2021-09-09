@@ -6,15 +6,14 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:shop_app/cloud/cloud.dart';
 import 'package:shop_app/models/recentChat.dart';
 import 'package:shop_app/models/privateChatModel.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ChatSectionScreen extends StatefulWidget {
   static String routeName = "/chatsection";
-  const ChatSectionScreen({
-    Key key,
-    this.mnunuaji,
-  }) : super(key: key);
+  const ChatSectionScreen({Key key, this.id, this.fname}) : super(key: key);
 
-  final Mnunuaji mnunuaji;
+  final String id;
+  final String fname;
 
   @override
   _ChatSectionScreenState createState() => _ChatSectionScreenState();
@@ -25,12 +24,14 @@ class _ChatSectionScreenState extends State<ChatSectionScreen> {
   String replyTime;
   String sentAt;
 
-  void sendMessage(String message, dynamic buyer) {
+  Future<void> sendMessage(String message, dynamic buyer) async {
     String id = Uuid().v4();
 
     var readBy = [];
     readBy.add(1);
-    
+    final prefs = await SharedPreferences.getInstance();
+    final key = 'userId';
+    final hostId = prefs.get(key) ?? 0;
     PrivateChatModel(
       readBy: readBy,
       friendId: 2,
@@ -40,39 +41,30 @@ class _ChatSectionScreenState extends State<ChatSectionScreen> {
       message: message,
       messageId: id,
     ).handleSendMessage(
-      senderId: 1,
-      friendId: 2,
+      senderId: int.parse(hostId),
+      friendId: int.parse(buyer.id),
       messageId: id,
     );
 
-    //   final String message;
-    // final int friendId;
-    // final String fullName;
-    // final String messageId;
-    // final String sentAt;
-    // final String createdAt;
-    // final int hostId;
-    // var readBy;
-
     Cloud.add(
-      serverPath: "RecentChat/" + "User" + "_" + "2" + "/" + "1" + "_" + "2",
+      serverPath: "RecentChat/" + "User" + "_" + hostId + "/" + hostId + "_" + buyer.id,
       value: RecentChat(
         lastMessage: message,
         fullName: buyer.fname,
         unseen: ServerValue.increment(0),
         time: DateTime.now().toString(),
-        friendId: 1,
+        friendId: int.parse(buyer.id),
       ).toMap(),
     ).whenComplete(
       () async {
         Cloud.add(
-          serverPath: "RecentChat/" + "User" + "_" "1" + "/" + "2" + "_" + "1",
+          serverPath: "RecentChat/" + "User" + "_" + buyer.id + "/" + buyer.id + "_" + hostId,
           value: RecentChat(
             lastMessage: message,
             fullName: buyer.fname,
             unseen: ServerValue.increment(0),
             time: DateTime.now().toString(),
-            friendId: 1,
+            friendId: int.parse(hostId),
           ).toMap(),
         );
       },
@@ -81,7 +73,7 @@ class _ChatSectionScreenState extends State<ChatSectionScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final Mnunuaji mnunuaji = ModalRoute.of(context).settings.arguments;
+    final args = ModalRoute.of(context).settings.arguments as ChatSectionScreen;
     return WillPopScope(
       onWillPop: () {
         print("on will scope");
@@ -94,7 +86,7 @@ class _ChatSectionScreenState extends State<ChatSectionScreen> {
               Navigator.pop(context);
             },
           ),
-          middle: Text("${mnunuaji.fname}"),
+          middle: Text("${args.fname}"),
         ),
         child: Stack(
           children: [
@@ -179,7 +171,7 @@ class _ChatSectionScreenState extends State<ChatSectionScreen> {
                                         color: Colors.white,
                                       ),
                                       onPressed: () {
-                                        sendMessage(_controllerText.text, mnunuaji);
+                                        sendMessage(_controllerText.text, args);
 
                                         _controllerText.clear();
                                       },
