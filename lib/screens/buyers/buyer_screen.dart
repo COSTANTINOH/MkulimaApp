@@ -4,6 +4,7 @@ import 'package:shop_app/components/coustom_bottom_nav_bar.dart';
 import 'package:shop_app/enums.dart';
 import 'package:shop_app/screens/buyers/tab_screen.dart';
 import 'package:shop_app/screens/buyers/tabs/wakulima_tab_screen.dart';
+import 'package:shop_app/screens/buyers/tabs/wanunuaji_tab_screen.dart';
 import 'package:shop_app/screens/chat/chat_list_screen.dart';
 import 'package:shop_app/screens/chat/new_chat_screen.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -46,7 +47,7 @@ class _BuyerScreenState extends State<BuyerScreen> with TickerProviderStateMixin
           children: [
             Icon(Icons.flight, size: 350),
             WakulimaTabScreen(),
-            Icon(Icons.directions_car, size: 350),
+            WanunuajiTabScreen(),
           ],
         ),
         bottomNavigationBar: CustomBottomNavBar(
