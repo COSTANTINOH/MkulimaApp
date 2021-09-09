@@ -58,7 +58,7 @@ class WakulimaTabScreen extends StatelessWidget {
               return Padding(
                 padding: EdgeInsets.only(left: getProportionateScreenWidth(5)),
                 // child: ProductCard(mazao: snapshot.data[index]),
-                child: MkulimaCard(mkulima : snapshot.data[index]),
+                child: MkulimaCard(mkulima: snapshot.data[index]),
               );
             },
           );
