@@ -25,6 +25,7 @@ dependencies:
   cloud_firestore:
   firebase_database:
   firebase_storage:
+  uuid:
 
 
   

@@ -1,7 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:shop_app/models/Mnunuaji.dart';
-import 'package:shop_app/models/mkulima.dart';
+import 'package:uuid/uuid.dart';
+import 'package:firebase_database/firebase_database.dart';
+import 'package:shop_app/cloud/cloud.dart';
+import 'package:shop_app/models/recentChat.dart';
+import 'package:shop_app/models/privateChatModel.dart';
 
 class ChatSectionScreen extends StatefulWidget {
   static String routeName = "/chatsection";
@@ -18,6 +22,62 @@ class ChatSectionScreen extends StatefulWidget {
 
 class _ChatSectionScreenState extends State<ChatSectionScreen> {
   TextEditingController _controllerText = TextEditingController();
+  String replyTime;
+  String sentAt;
+
+  void sendMessage(String message, dynamic buyer) {
+    String id = Uuid().v4();
+
+    var readBy = [];
+    readBy.add(1);
+    
+    PrivateChatModel(
+      readBy: readBy,
+      friendId: 2,
+      hostId: 2,
+      createdAt: replyTime,
+      sentAt: sentAt,
+      message: message,
+      messageId: id,
+    ).handleSendMessage(
+      senderId: 1,
+      friendId: 2,
+      messageId: id,
+    );
+
+    //   final String message;
+    // final int friendId;
+    // final String fullName;
+    // final String messageId;
+    // final String sentAt;
+    // final String createdAt;
+    // final int hostId;
+    // var readBy;
+
+    Cloud.add(
+      serverPath: "RecentChat/" + "User" + "_" + "2" + "/" + "1" + "_" + "2",
+      value: RecentChat(
+        lastMessage: message,
+        fullName: buyer.fname,
+        unseen: ServerValue.increment(0),
+        time: DateTime.now().toString(),
+        friendId: 1,
+      ).toMap(),
+    ).whenComplete(
+      () async {
+        Cloud.add(
+          serverPath: "RecentChat/" + "User" + "_" "1" + "/" + "2" + "_" + "1",
+          value: RecentChat(
+            lastMessage: message,
+            fullName: buyer.fname,
+            unseen: ServerValue.increment(0),
+            time: DateTime.now().toString(),
+            friendId: 1,
+          ).toMap(),
+        );
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -119,7 +179,9 @@ class _ChatSectionScreenState extends State<ChatSectionScreen> {
                                         color: Colors.white,
                                       ),
                                       onPressed: () {
-                                        // sendMessage()
+                                        sendMessage(_controllerText.text, mnunuaji);
+
+                                        _controllerText.clear();
                                       },
                                     ),
                                   ),
