@@ -59,6 +59,7 @@ class _PrivateChatListTabState extends State<PrivateChatListTab> {
                   children: [
                     Expanded(
                       child: ChatItem(
+                        friendId: listItem[index]['userId'].toString(),
                         name: listItem[index]['fullname'],
                         count: listItem[index]['unseen'],
                         time: listItem[index]['time'],

@@ -28,6 +28,7 @@ class _ChatItemState extends State<ChatItem> {
 
   @override
   void initState() {
+    print("friend Id ${widget.friendId}");
     super.initState();
   }
 
@@ -50,8 +51,6 @@ class _ChatItemState extends State<ChatItem> {
           radius: 30,
           backgroundColor: Colors.transparent,
           backgroundImage: AssetImage("assets/images/user.png"),
-          // backgroundImage: cachedProvider(context, image: widget.picture),
-          // child: _renderOnline(),
         ),
         title: Text(
           "${widget.name}",

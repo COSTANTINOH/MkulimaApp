@@ -23,15 +23,30 @@ class _ChatSectionScreenState extends State<ChatSectionScreen> {
   TextEditingController _controllerText = TextEditingController();
   String replyTime;
   String sentAt;
+  var hostIdMe;
+
+  @override
+  void initState() {
+    userId();
+    super.initState();
+  }
+
+  Future<void> userId() async {
+    final prefs = await SharedPreferences.getInstance();
+    final key = 'userId';
+    hostIdMe = prefs.get(key) ?? 0;
+  }
 
   Future<void> sendMessage(String message, dynamic buyer) async {
     String id = Uuid().v4();
 
     var readBy = [];
-    readBy.add(1);
     final prefs = await SharedPreferences.getInstance();
     final key = 'userId';
     final hostId = prefs.get(key) ?? 0;
+
+    readBy.add(hostId);
+
     PrivateChatModel(
       readBy: readBy,
       friendId: 2,
@@ -74,6 +89,7 @@ class _ChatSectionScreenState extends State<ChatSectionScreen> {
   @override
   Widget build(BuildContext context) {
     final args = ModalRoute.of(context).settings.arguments as ChatSectionScreen;
+    print("data# ${args.id}");
     return WillPopScope(
       onWillPop: () {
         print("on will scope");
@@ -108,7 +124,41 @@ class _ChatSectionScreenState extends State<ChatSectionScreen> {
                             fit: BoxFit.cover,
                           ),
                         ),
-                        child: Text("messag") // ,
+                        child: StreamBuilder(
+                          stream: FirebaseDatabase.instance
+                              .reference()
+                              .child(
+                                "privateMessage/" + "1" + "/" + args.id,
+                              )
+                              .orderByChild('createdAt')
+                              .onValue,
+                          builder: (_, snap) {
+                            if (snap.hasData) {
+                              var _data = [];
+
+                              if (snap.data.snapshot.value != null) {
+                                Map<dynamic, dynamic> map = snap.data.snapshot.value;
+                                _data = map.values.toList()..sort((a, b) => b['sentAt'].compareTo(a['sentAt']));
+                              }
+
+                              return snap.data.snapshot.value == null && _data.length == 0
+                                  ? Center(
+                                      child: Text("no message $hostIdMe"),
+                                    )
+                                  : ListView.builder(
+                                      physics: BouncingScrollPhysics(),
+                                      reverse: true,
+                                      itemCount: _data.length,
+                                      itemBuilder: (_, i) {
+                                        var snap = _data[i];
+                                        return Text("${snap['message']}");
+                                      },
+                                    );
+                            } else {
+                              return Text("no message");
+                            }
+                          },
+                        ) // ,
                         ),
                   ),
                   Align(

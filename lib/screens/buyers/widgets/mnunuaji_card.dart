@@ -37,7 +37,7 @@ class _MnunuajiCardState extends State<MnunuajiCard> {
               context,
               ChatSectionScreen.routeName,
               arguments: ChatSectionScreen(
-                fname: widget.mnunuaji.fname,
+                fname: widget.mnunuaji.fname, 
                 id: widget.mnunuaji.id,
               ),
             )
