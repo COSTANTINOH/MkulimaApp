@@ -151,7 +151,85 @@ class _ChatSectionScreenState extends State<ChatSectionScreen> {
                                       itemCount: _data.length,
                                       itemBuilder: (_, i) {
                                         var snap = _data[i];
-                                        return Text("${snap['message']}");
+                                        return Row(
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          mainAxisAlignment: (hostIdMe == snap['senderId']) ? MainAxisAlignment.start : MainAxisAlignment.end,
+                                          children: [
+                                            // (hostIdMe != snap['userId'])
+                                            //     ? Padding(
+                                            //         padding: const EdgeInsets.only(left: 8.0, top: 10),
+                                            //         child: CircleAvatar(
+                                            //           radius: 20.0,
+                                            //           backgroundImage: AssetImage('assets/images/smile.png'),
+                                            //         ),
+                                            //       )
+                                            //     : SizedBox(),
+                                            SizedBox(
+                                              width: 10,
+                                            ),
+                                            Padding(
+                                              padding: const EdgeInsets.all(8.0),
+                                              child: Container(
+                                                decoration: BoxDecoration(
+                                                  boxShadow: [
+                                                    BoxShadow(
+                                                      color: Colors.grey,
+                                                      blurRadius: 1.0,
+                                                      spreadRadius: 0.0,
+                                                      offset: Offset(1.0, 1.0),
+                                                    )
+                                                  ],
+                                                  color: (hostIdMe != snap['senderId'] ? Colors.white : Colors.lightGreen[200]),
+                                                  borderRadius: (hostIdMe == snap['senderId'])
+                                                      ? BorderRadius.only(
+                                                          bottomLeft: Radius.circular(10.0),
+                                                          topLeft: Radius.circular(10.0),
+                                                          bottomRight: Radius.circular(20.0),
+                                                        )
+                                                      : BorderRadius.only(
+                                                          bottomLeft: Radius.circular(10.0),
+                                                          topRight: Radius.circular(10.0),
+                                                          bottomRight: Radius.circular(10.0),
+                                                        ),
+                                                ),
+                                                child: Column(
+                                                  children: [
+                                                    // ((hostIdMe != snap['userId']))
+                                                    //     ? Material(
+                                                    //         color: (hostIdMe == snap['senderId']) ? Colors.white : Colors.lightGreen[200],
+                                                    //         child: Text(
+                                                    //           "${snap['userId']}",
+                                                    //           style: TextStyle(
+                                                    //             fontSize: 13.0,
+                                                    //             color: Colors.black,
+                                                    //           ),
+                                                    //         ),
+                                                    //       )
+                                                    //     : SizedBox(),
+                                                    Container(
+                                                      // width: deviceWidth(context) * 0.75,
+                                                      width: 100,
+                                                      constraints: BoxConstraints(minWidth: 50),
+                                                      margin: EdgeInsets.only(bottom: 2.0, top: 0.0, left: 0, right: 0),
+                                                      child: Padding(
+                                                        padding: const EdgeInsets.all(8.0),
+                                                        child: Material(
+                                                          color: (hostIdMe != snap['senderId']) ? Colors.white : Colors.lightGreen[200],
+                                                          child: Text(
+                                                            "${snap['message']}",
+                                                            style: TextStyle(
+                                                              fontSize: 13.0,
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        );
                                       },
                                     );
                             } else {
