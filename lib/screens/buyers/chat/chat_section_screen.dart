@@ -119,7 +119,7 @@ class _ChatSectionScreenState extends State<ChatSectionScreen> {
                                         color: Colors.white,
                                       ),
                                       onPressed: () {
-                                        sendMessage()
+                                        // sendMessage()
                                       },
                                     ),
                                   ),
