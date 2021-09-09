@@ -57,8 +57,6 @@ class PromotedProducts extends StatelessWidget {
                   child: Text("No Data"),
                 );
               } else if (snapshot.hasData) {
-                // return Text("${snapshot.data}");
-                print("lenght ${snapshot.data}");
                 return ListView.builder(
                   scrollDirection: Axis.horizontal,
                   itemCount: snapshot.data.length,
@@ -72,7 +70,7 @@ class PromotedProducts extends StatelessWidget {
                   },
                 );
               } else {
-                return Text("new videos");
+                return Text("no data");
               }
             },
           ),

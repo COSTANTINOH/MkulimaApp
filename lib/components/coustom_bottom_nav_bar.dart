@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:shop_app/components/no_auth.dart';
+import 'package:shop_app/screens/buyers/buyer_screen.dart';
 import 'package:shop_app/screens/chat/chat_screen.dart';
 import 'package:shop_app/screens/home/home_screen.dart';
 import 'package:shop_app/screens/profile/profile_screen.dart';
@@ -56,12 +57,30 @@ class CustomBottomNavBar extends StatelessWidget {
             IconButton(
               icon: SvgPicture.asset(
                 "assets/icons/User Icon.svg",
+                color: MenuState.favourite == selectedMenu ? kPrimaryColor : inActiveIconColor,
               ),
-              onPressed: () {},
+              onPressed: () async {
+                final prefs = await SharedPreferences.getInstance();
+                final key = 'login';
+                final value = prefs.get(key) ?? 0;
+
+                if (value == 0) {
+                  Navigator.pushNamed(
+                    context,
+                    NoAuthBanner.routeName,
+                  );
+                } else {
+                  Navigator.pushNamed(
+                    context,
+                    BuyerScreen.routeName,
+                  );
+                }
+              },
             ),
             IconButton(
               icon: SvgPicture.asset(
                 "assets/icons/Chat bubble Icon.svg",
+                color: MenuState.profile == selectedMenu ? kPrimaryColor : inActiveIconColor,
               ),
               onPressed: () async {
                 final prefs = await SharedPreferences.getInstance();

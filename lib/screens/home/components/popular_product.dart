@@ -67,7 +67,6 @@ class PopularProducts extends StatelessWidget {
                 );
               } else if (snapshot.hasData) {
                 // return Text("${snapshot.data}");
-                print("lenght ${snapshot.data}");
                 return ListView.builder(
                   scrollDirection: Axis.horizontal,
                   itemCount: snapshot.data.length,

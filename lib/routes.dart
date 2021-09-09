@@ -1,5 +1,6 @@
 import 'package:flutter/widgets.dart';
 import 'package:shop_app/components/no_auth.dart';
+import 'package:shop_app/screens/buyers/buyer_screen.dart';
 import 'package:shop_app/screens/cart/cart_screen.dart';
 import 'package:shop_app/screens/chat/chat_screen.dart';
 import 'package:shop_app/screens/complete_profile/complete_profile_screen.dart';
@@ -30,4 +31,6 @@ final Map<String, WidgetBuilder> routes = {
   ProfileScreen.routeName: (context) => ProfileScreen(),
   ChatScreen.routeName: (context) => ChatScreen(),
    NoAuthBanner.routeName: (context) => NoAuthBanner(),
+   BuyerScreen.routeName: (context) => BuyerScreen(),
+
 };

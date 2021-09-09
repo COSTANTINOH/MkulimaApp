@@ -60,8 +60,6 @@ class Categories extends StatelessWidget {
                   child: Text("No Data"),
                 );
               } else if (snapshot.hasData) {
-                // return Text("${snapshot.data}");
-                print("lenght ${snapshot.data}");
                 return ListView.builder(
                   physics: BouncingScrollPhysics(),
                   scrollDirection: Axis.horizontal,
@@ -70,7 +68,7 @@ class Categories extends StatelessWidget {
                     return Padding(
                       padding: EdgeInsets.only(left: getProportionateScreenWidth(20)),
                       child: CategoryCard(
-                        icon: "hell",
+                        icon: "isofttz",
                         text: snapshot.data[index].categoryName,
                         press: () {},
                       ),
