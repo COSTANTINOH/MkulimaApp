@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1031580417713",
+    "project_id": "chatapp-ede4a",
+    "storage_bucket": "chatapp-ede4a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1031580417713:android:70b9e3a59418d29578ac90",
+        "android_client_info": {
+          "package_name": "com.example.shop_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1031580417713-4o2kaa00sh2hn7vbppvarq9bj6jof1nf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyATA4ZSO5ZVKKNRYHSjJRGSjArmDMUrPtU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1031580417713-4o2kaa00sh2hn7vbppvarq9bj6jof1nf.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

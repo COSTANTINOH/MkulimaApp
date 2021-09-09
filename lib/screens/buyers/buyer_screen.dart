@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:shop_app/components/coustom_bottom_nav_bar.dart';
 import 'package:shop_app/enums.dart';
+import 'package:shop_app/screens/buyers/tabs/mazungumzo_tab_screen.dart';
 import 'package:shop_app/screens/buyers/tabs/wakulima_tab_screen.dart';
 import 'package:shop_app/screens/buyers/tabs/wanunuaji_tab_screen.dart';
 import 'package:shop_app/screens/chat/chat_list_screen.dart';
@@ -44,7 +45,7 @@ class _BuyerScreenState extends State<BuyerScreen> with TickerProviderStateMixin
         ),
         body: TabBarView(
           children: [
-            Icon(Icons.flight, size: 350),
+            PrivateChatListTab(),
             WakulimaTabScreen(),
             WanunuajiTabScreen(),
           ],
