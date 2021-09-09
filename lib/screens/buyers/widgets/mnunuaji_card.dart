@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shop_app/models/Mnunuaji.dart';
-import 'package:shop_app/models/mkulima.dart';
+import 'package:shop_app/screens/buyers/chat/chat_section_screen.dart';
 
 enum MessageType { normal, photo, video, document, contact }
 
@@ -32,7 +32,13 @@ class _MnunuajiCardState extends State<MnunuajiCard> {
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: ListTile(
-          onTap: () => {},
+          onTap: () => {
+            Navigator.pushNamed(
+              context,
+              ChatSectionScreen.routeName,
+              arguments: widget.mnunuaji,
+            )
+          },
           leading: CircleAvatar(
             radius: 30,
             backgroundColor: Colors.transparent,
@@ -67,7 +73,13 @@ class _MnunuajiCardState extends State<MnunuajiCard> {
               Icons.chat_bubble,
               color: Colors.black45,
             ),
-            onPressed: () {},
+            onPressed: () {
+              Navigator.pushNamed(
+                context,
+                ChatSectionScreen.routeName,
+                arguments: widget.mnunuaji,
+              );
+            },
           ),
         ),
       ),
