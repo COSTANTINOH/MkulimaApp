@@ -29,6 +29,9 @@ class _MnunuajiCardState extends State<MnunuajiCard> {
   Widget build(BuildContext context) {
     return Card(
       elevation: 5,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(10),
+      ),
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: ListTile(
@@ -37,7 +40,7 @@ class _MnunuajiCardState extends State<MnunuajiCard> {
               context,
               ChatSectionScreen.routeName,
               arguments: ChatSectionScreen(
-                fname: widget.mnunuaji.fname, 
+                fname: widget.mnunuaji.fname,
                 id: widget.mnunuaji.id,
               ),
             )

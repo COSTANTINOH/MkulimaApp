@@ -27,6 +27,9 @@ class _MkulimaCardState extends State<MkulimaCard> {
   @override
   Widget build(BuildContext context) {
     return Card(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(10),
+      ),
       elevation: 5,
       child: Padding(
         padding: const EdgeInsets.all(8.0),

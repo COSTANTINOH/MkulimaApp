@@ -6,6 +6,7 @@ import 'package:shop_app/screens/buyers/buyer_screen.dart';
 import 'package:shop_app/screens/chat/chat_screen.dart';
 import 'package:shop_app/screens/home/home_screen.dart';
 import 'package:shop_app/screens/profile/profile_screen.dart';
+import 'package:shop_app/screens/pembejeo/pembejeo_screen.dart';
 
 import '../constants.dart';
 import '../enums.dart';
@@ -56,7 +57,7 @@ class CustomBottomNavBar extends StatelessWidget {
             ),
             IconButton(
               icon: SvgPicture.asset(
-                "assets/icons/User Icon.svg",
+                "assets/icons/Chat bubble Icon.svg",
                 color: MenuState.favourite == selectedMenu ? kPrimaryColor : inActiveIconColor,
               ),
               onPressed: () async {
@@ -79,8 +80,8 @@ class CustomBottomNavBar extends StatelessWidget {
             ),
             IconButton(
               icon: SvgPicture.asset(
-                "assets/icons/Chat bubble Icon.svg",
-                color: MenuState.profile == selectedMenu ? kPrimaryColor : inActiveIconColor,
+                "assets/icons/Gift Icon.svg",
+                color: MenuState.message == selectedMenu ? kPrimaryColor : inActiveIconColor,
               ),
               onPressed: () async {
                 final prefs = await SharedPreferences.getInstance();
@@ -95,7 +96,7 @@ class CustomBottomNavBar extends StatelessWidget {
                 } else {
                   Navigator.pushNamed(
                     context,
-                    ChatScreen.routeName,
+                    PembejeoScreen.routeName,
                   );
                 }
               },

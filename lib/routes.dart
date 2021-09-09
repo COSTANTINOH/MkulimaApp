@@ -13,6 +13,8 @@ import 'package:shop_app/screens/profile/profile_screen.dart';
 import 'package:shop_app/screens/sign_in/sign_in_screen.dart';
 import 'package:shop_app/screens/splash/splash_screen.dart';
 import 'package:shop_app/screens/buyers/chat/chat_section_screen.dart';
+import 'package:shop_app/screens/pembejeo/pembejeo_screen.dart';
+
 
 
 import 'screens/sign_up/sign_up_screen.dart';
@@ -35,5 +37,6 @@ final Map<String, WidgetBuilder> routes = {
    NoAuthBanner.routeName: (context) => NoAuthBanner(),
    BuyerScreen.routeName: (context) => BuyerScreen(),
    ChatSectionScreen.routeName: (context) => ChatSectionScreen(),
+   PembejeoScreen.routeName: (context) => PembejeoScreen(),
 
 };
