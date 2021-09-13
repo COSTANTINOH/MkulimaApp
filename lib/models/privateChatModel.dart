@@ -22,7 +22,6 @@ class PrivateChatModel {
     this.readBy,
   });
 
-
   // static handleAddUserChat(BuildContext context, {String message, String convoId, RecentChat model}) async {
   //   if (await DataConnectionChecker().hasConnection) {
   //     Cloud.add(serverPath: "RecentChat/" + "Jatutalk_" + TalkUser.talkDataHolder.id.toString() + "/" + convoId, value: model.toMap());
@@ -36,7 +35,7 @@ class PrivateChatModel {
     print("message send $senderId $friendId $messageId");
     FirebaseDatabase.instance.reference().child('privateMessage/' + "$senderId" + "/" + "$friendId" + "/" + messageId).set({
       "receiverId": friendId,
-      "senderId": hostId,
+      "senderId": senderId,
       "messageId": messageId,
       "createdAt": DateTime.now().toString(),
       "sentAt": DateTime.now().toString(),
@@ -47,7 +46,7 @@ class PrivateChatModel {
         FirebaseDatabase.instance.reference().child('privateMessage/' + "$friendId" + "/" + "$senderId" + "/" + messageId).set(
           {
             "receiverId": friendId,
-            "senderId": hostId,
+            "senderId": senderId,
             "messageId": messageId,
             "createdAt": DateTime.now().toString(),
             "sentAt": DateTime.now().toString(),
@@ -60,5 +59,4 @@ class PrivateChatModel {
 
     // .set(model.toMap());
   }
-
 }

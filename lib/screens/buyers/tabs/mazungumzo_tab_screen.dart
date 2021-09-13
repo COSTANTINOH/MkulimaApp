@@ -1,5 +1,6 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:shop_app/screens/buyers/widgets/chat_item.dart';
 
 class PrivateChatListTab extends StatefulWidget {
@@ -11,28 +12,38 @@ class PrivateChatListTab extends StatefulWidget {
 class _PrivateChatListTabState extends State<PrivateChatListTab> {
   Map<String, dynamic> blocs = {};
   List<dynamic> blockersIDs = [];
-  var _key = Key(DateTime.now().millisecondsSinceEpoch.toString());
-  var _query = FirebaseDatabase.instance.reference().child("RecentChat/User_1");
+  static var _key; //= Key(DateTime.now().millisecondsSinceEpoch.toString());
+  static var _query; //= FirebaseDatabase.instance.reference().child("RecentChat/User_1");
   List selectedConv = [];
   var recentChat;
   List mychats = [];
 
   static Future<dynamic> getRecentChat() async {
-    await FirebaseDatabase.instance.reference().child("RecentChat/User_1").once().then((snapshot) {
-      return snapshot.value;
-    });
+    final prefs = await SharedPreferences.getInstance();
+    final key = 'userId';
+    final hostId = prefs.get(key) ?? 0;
+
+    // await FirebaseDatabase.instance.reference().child("RecentChat/User_" + hostId).once().then((snapshot) {
+    //   return snapshot.value;
+    // });
   }
 
   @override
   void initState() {
-    getRecentChat();
-    FirebaseDatabase.instance.reference().child("RecentChat/User_1").onValue.listen((event) {
+    super.initState();
+    asyncMethod();
+  }
+
+  void asyncMethod() async {
+    final prefs = await SharedPreferences.getInstance();
+    final key = 'userId';
+    final hostId = prefs.get(key) ?? 0;
+    FirebaseDatabase.instance.reference().child("RecentChat/User_" + hostId).onValue.listen((event) {
       setState(() {
-        _query = FirebaseDatabase.instance.reference().child("RecentChat/User_1");
+        _query = FirebaseDatabase.instance.reference().child("RecentChat/User_" + hostId);
         _key = Key(DateTime.now().millisecondsSinceEpoch.toString());
       });
     });
-    super.initState();
   }
 
   @override

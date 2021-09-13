@@ -22,7 +22,7 @@ class TitleBanner extends StatelessWidget {
       ),
       child: Center(
         child: Text(
-          "Mkulima",
+          "Mkulima Sokoni App",
           style: TextStyle(fontSize: getProportionateScreenWidth(24), fontWeight: FontWeight.bold, color: Colors.black),
         ),
       ),

@@ -27,25 +27,34 @@ class _ChatSectionScreenState extends State<ChatSectionScreen> {
 
   @override
   void initState() {
-    userId();
     super.initState();
+    asyncMethod();
   }
 
-  Future<void> userId() async {
+  // Future<void> userId() async {
+  //   final prefs = await SharedPreferences.getInstance();
+  //   final key = 'userId';
+  //   hostIdMe = prefs.get(key) ?? 0;
+  // }
+
+  void asyncMethod() async {
     final prefs = await SharedPreferences.getInstance();
     final key = 'userId';
-    hostIdMe = prefs.get(key) ?? 0;
+    final hostId = prefs.get(key) ?? 0;
+    setState(() {
+      hostIdMe = hostId;
+    });
   }
 
   Future<void> sendMessage(String message, dynamic buyer) async {
     String id = Uuid().v4();
 
     var readBy = [];
-    final prefs = await SharedPreferences.getInstance();
-    final key = 'userId';
-    final hostId = prefs.get(key) ?? 0;
+    // final prefs = await SharedPreferences.getInstance();
+    // final key = 'userId';
+    // final hostId = prefs.get(key) ?? 0;
 
-    readBy.add(hostId);
+    readBy.add(hostIdMe);
 
     PrivateChatModel(
       readBy: readBy,
@@ -56,13 +65,13 @@ class _ChatSectionScreenState extends State<ChatSectionScreen> {
       message: message,
       messageId: id,
     ).handleSendMessage(
-      senderId: int.parse(hostId),
+      senderId: int.parse(hostIdMe),
       friendId: int.parse(buyer.id),
       messageId: id,
     );
 
     Cloud.add(
-      serverPath: "RecentChat/" + "User" + "_" + hostId + "/" + hostId + "_" + buyer.id,
+      serverPath: "RecentChat/" + "User" + "_" + hostIdMe + "/" + hostIdMe + "_" + buyer.id,
       value: RecentChat(
         lastMessage: message,
         fullName: buyer.fname,
@@ -73,13 +82,13 @@ class _ChatSectionScreenState extends State<ChatSectionScreen> {
     ).whenComplete(
       () async {
         Cloud.add(
-          serverPath: "RecentChat/" + "User" + "_" + buyer.id + "/" + buyer.id + "_" + hostId,
+          serverPath: "RecentChat/" + "User" + "_" + buyer.id + "/" + buyer.id + "_" + hostIdMe,
           value: RecentChat(
             lastMessage: message,
             fullName: buyer.fname,
             unseen: ServerValue.increment(0),
             time: DateTime.now().toString(),
-            friendId: int.parse(hostId),
+            friendId: int.parse(hostIdMe),
           ).toMap(),
         );
       },
@@ -89,7 +98,6 @@ class _ChatSectionScreenState extends State<ChatSectionScreen> {
   @override
   Widget build(BuildContext context) {
     final args = ModalRoute.of(context).settings.arguments as ChatSectionScreen;
-    print("data# ${args.id}");
     return WillPopScope(
       onWillPop: () {
         print("on will scope");
@@ -128,7 +136,7 @@ class _ChatSectionScreenState extends State<ChatSectionScreen> {
                           stream: FirebaseDatabase.instance
                               .reference()
                               .child(
-                                "privateMessage/" + "1" + "/" + args.id,
+                                "privateMessage/" + hostIdMe + "/" + args.id,
                               )
                               .orderByChild('createdAt')
                               .onValue,
@@ -153,78 +161,63 @@ class _ChatSectionScreenState extends State<ChatSectionScreen> {
                                         var snap = _data[i];
                                         return Row(
                                           crossAxisAlignment: CrossAxisAlignment.start,
-                                          mainAxisAlignment: (hostIdMe == snap['senderId']) ? MainAxisAlignment.start : MainAxisAlignment.end,
+                                          mainAxisAlignment:
+                                              (snap['senderId'].toString() == hostIdMe.toString()) ? MainAxisAlignment.end : MainAxisAlignment.start,
                                           children: [
-                                            // (hostIdMe != snap['userId'])
-                                            //     ? Padding(
-                                            //         padding: const EdgeInsets.only(left: 8.0, top: 10),
-                                            //         child: CircleAvatar(
-                                            //           radius: 20.0,
-                                            //           backgroundImage: AssetImage('assets/images/smile.png'),
-                                            //         ),
-                                            //       )
-                                            //     : SizedBox(),
                                             SizedBox(
                                               width: 10,
                                             ),
                                             Padding(
                                               padding: const EdgeInsets.all(8.0),
-                                              child: Container(
-                                                decoration: BoxDecoration(
-                                                  boxShadow: [
-                                                    BoxShadow(
-                                                      color: Colors.grey,
-                                                      blurRadius: 1.0,
-                                                      spreadRadius: 0.0,
-                                                      offset: Offset(1.0, 1.0),
-                                                    )
-                                                  ],
-                                                  color: (hostIdMe != snap['senderId'] ? Colors.white : Colors.lightGreen[200]),
-                                                  borderRadius: (hostIdMe == snap['senderId'])
-                                                      ? BorderRadius.only(
-                                                          bottomLeft: Radius.circular(10.0),
-                                                          topLeft: Radius.circular(10.0),
-                                                          bottomRight: Radius.circular(20.0),
+                                              child: Card(
+                                                elevation: 2,
+                                                child: ClipRRect(
+                                                  borderRadius: BorderRadius.circular(10),
+                                                  child: Container(
+                                                    decoration: BoxDecoration(
+                                                      boxShadow: [
+                                                        BoxShadow(
+                                                          color: Colors.grey,
+                                                          blurRadius: 1.0,
+                                                          spreadRadius: 0.0,
+                                                          offset: Offset(1.0, 1.0),
                                                         )
-                                                      : BorderRadius.only(
-                                                          bottomLeft: Radius.circular(10.0),
-                                                          topRight: Radius.circular(10.0),
-                                                          bottomRight: Radius.circular(10.0),
-                                                        ),
-                                                ),
-                                                child: Column(
-                                                  children: [
-                                                    // ((hostIdMe != snap['userId']))
-                                                    //     ? Material(
-                                                    //         color: (hostIdMe == snap['senderId']) ? Colors.white : Colors.lightGreen[200],
-                                                    //         child: Text(
-                                                    //           "${snap['userId']}",
-                                                    //           style: TextStyle(
-                                                    //             fontSize: 13.0,
-                                                    //             color: Colors.black,
-                                                    //           ),
-                                                    //         ),
-                                                    //       )
-                                                    //     : SizedBox(),
-                                                    Container(
-                                                      // width: deviceWidth(context) * 0.75,
-                                                      width: 100,
-                                                      constraints: BoxConstraints(minWidth: 50),
-                                                      margin: EdgeInsets.only(bottom: 2.0, top: 0.0, left: 0, right: 0),
-                                                      child: Padding(
-                                                        padding: const EdgeInsets.all(8.0),
-                                                        child: Material(
-                                                          color: (hostIdMe != snap['senderId']) ? Colors.white : Colors.lightGreen[200],
-                                                          child: Text(
-                                                            "${snap['message']}",
-                                                            style: TextStyle(
-                                                              fontSize: 13.0,
+                                                      ],
+                                                      color: (hostIdMe.toString() != snap['senderId'].toString() ? Colors.white : Colors.white),
+                                                      borderRadius: (hostIdMe == snap['senderId'])
+                                                          ? BorderRadius.only(
+                                                              bottomLeft: Radius.circular(10.0),
+                                                              topLeft: Radius.circular(10.0),
+                                                              bottomRight: Radius.circular(20.0),
+                                                            )
+                                                          : BorderRadius.only(
+                                                              bottomLeft: Radius.circular(10.0),
+                                                              topRight: Radius.circular(10.0),
+                                                              bottomRight: Radius.circular(10.0),
+                                                            ),
+                                                    ),
+                                                    child: Column(
+                                                      children: [
+                                                        Container(
+                                                          width: 100,
+                                                          constraints: BoxConstraints(minWidth: 50),
+                                                          margin: EdgeInsets.only(bottom: 2.0, top: 0.0, left: 0, right: 0),
+                                                          child: Padding(
+                                                            padding: const EdgeInsets.all(8.0),
+                                                            child: Material(
+                                                              color: (hostIdMe != snap['senderId']) ? Colors.white : Colors.lightGreen[200],
+                                                              child: Text(
+                                                                "${snap['message']}",
+                                                                style: TextStyle(
+                                                                  fontSize: 13.0,
+                                                                ),
+                                                              ),
                                                             ),
                                                           ),
                                                         ),
-                                                      ),
+                                                      ],
                                                     ),
-                                                  ],
+                                                  ),
                                                 ),
                                               ),
                                             ),

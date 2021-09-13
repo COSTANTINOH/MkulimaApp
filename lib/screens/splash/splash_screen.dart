@@ -40,7 +40,7 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     // _saveFirstTime();
     Timer(
-      Duration(seconds: 5),
+      Duration(seconds: 10),
       () => Navigator.pushReplacement(
         context,
         MaterialPageRoute(
@@ -97,7 +97,7 @@ class _SplashScreenState extends State<SplashScreen> {
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Text(
-                      "Mkulima v 1.0",
+                      "Mkulima Sokoni App v 1.0",
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 15.0,

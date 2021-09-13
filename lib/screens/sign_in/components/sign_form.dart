@@ -101,7 +101,11 @@ class _SignFormState extends State<SignForm> {
             passwordController.text = "";
           },
         );
-        _saveLogin(json[0]['name']);
+        if (json[0]["name"] != null) {
+          _saveLogin(json[0]['name']);
+        } else {
+          _saveLogin(json[0]['fname']);
+        }
         _saveLoginID(json[0]['id']);
         if (json[0]["tag"] != null) {
           _saveLoginTagFarmer(json[0]["tag"]);
