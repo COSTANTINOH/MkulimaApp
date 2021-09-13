@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:shop_app/components/default_button.dart';
 import 'package:shop_app/models/Mazao.dart';
 import 'package:shop_app/models/Product.dart';
+import 'package:shop_app/screens/buyers/chat/chat_section_screen.dart';
 import 'package:shop_app/screens/widget/metrics.dart';
 import 'package:shop_app/size_config.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -54,8 +55,18 @@ class Body extends StatelessWidget {
                             manualStepper(step: 5),
                             DefaultButton(
                               text: "Wasiliana Mkulima",
-                              press: () => launch("tel://${product.phone}"),
-                              icon: Icons.phone,
+                              // press: () => launch("tel://${product.phone}"),
+                              press: () {
+                                Navigator.pushNamed(
+                                  context,
+                                  ChatSectionScreen.routeName,
+                                  arguments: ChatSectionScreen(
+                                    fname: "mkulima name",
+                                    id: product.id,
+                                  ),
+                                );
+                              },
+                              icon: Icons.message_sharp,
                             ),
                           ],
                         ),

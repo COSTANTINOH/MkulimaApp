@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shop_app/models/mkulima.dart';
+import 'package:shop_app/screens/buyers/chat/chat_section_screen.dart';
 
 enum MessageType { normal, photo, video, document, contact }
 
@@ -34,7 +35,16 @@ class _MkulimaCardState extends State<MkulimaCard> {
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: ListTile(
-          onTap: () => {},
+          onTap: () => {
+            Navigator.pushNamed(
+              context,
+              ChatSectionScreen.routeName,
+              arguments: ChatSectionScreen(
+                fname: widget.mkulima.name,
+                id: widget.mkulima.id,
+              ),
+            )
+          },
           leading: CircleAvatar(
             radius: 30,
             backgroundColor: Colors.transparent,
