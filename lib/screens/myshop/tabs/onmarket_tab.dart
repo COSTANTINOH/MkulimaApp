@@ -6,10 +6,13 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:shop_app/models/Mazao.dart';
 import 'package:shop_app/screens/home/components/categories.dart';
 import 'package:shop_app/screens/home/components/product_cart.dart';
+import 'package:shop_app/screens/myshop/add_product_screen.dart';
 
 import '../../../size_config.dart';
 
 class OnMarket extends StatefulWidget {
+  static String routeName = "/onmarket";
+  
   const OnMarket({Key key}) : super(key: key);
 
   @override
@@ -85,7 +88,12 @@ class _OnMarketState extends State<OnMarket> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: null,
+        onPressed: () {
+          Navigator.pushNamed(
+            context,
+            AddProductScreen.routeName,
+          );
+        },
         backgroundColor: Colors.green,
         child: Icon(
           Icons.add,
