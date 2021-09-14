@@ -80,15 +80,6 @@ class Categories extends StatelessWidget {
               }
             },
           ),
-          //  List.generate(
-          //   categories.length,
-          //   (index) => CategoryCard(
-          //     icon: categories[index]["icon"],
-          //     text: categories[index]["text"],
-          //     press: () {},
-          //   ),
-          // ),
-          // ),
         ),
       ),
     );

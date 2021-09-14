@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:shop_app/screens/home/home_screen.dart';
+import 'package:shop_app/screens/myshop/myshop_screen.dart';
 import 'package:shop_app/services/shared/splash_shared.dart';
 
 import 'profile_menu.dart';
@@ -21,9 +22,14 @@ class Body extends StatelessWidget {
             press: () => {},
           ),
           ProfileMenu(
-            text: "My Shop",
+            text: "Sokoni Langu",
             icon: "assets/icons/Bell.svg",
-            press: () {},
+            press: () {
+              Navigator.pushNamed(
+                context,
+                MyShopScreen.routeName,
+              );
+            },
           ),
           // ProfileMenu(
           //   text: "Settings",

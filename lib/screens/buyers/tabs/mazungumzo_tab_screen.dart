@@ -50,46 +50,54 @@ class _PrivateChatListTabState extends State<PrivateChatListTab> {
   Widget build(BuildContext context) {
     var valueQuery = _query;
     return Scaffold(
-      body: StreamBuilder(
-        stream: valueQuery.onValue,
-        builder: (BuildContext context, AsyncSnapshot snapshot) {
-          if (snapshot.hasData && !snapshot.hasError && snapshot.data.snapshot.value != null) {
-            List listItem = [];
-            Map<dynamic, dynamic> item = snapshot.data.snapshot.value;
-            final now = DateTime.now();
-            item.forEach(
-              (key, value) {
-                listItem.add(value);
-              },
-            );
-            listItem.sort((a, b) => b["time"].compareTo(a["time"]));
-            return ListView.builder(
-              itemCount: listItem.length,
-              itemBuilder: (BuildContext context, int index) {
-                return Row(
-                  children: [
-                    Expanded(
-                      child: ChatItem(
-                        friendId: listItem[index]['userId'].toString(),
-                        name: listItem[index]['fullname'],
-                        count: listItem[index]['unseen'],
-                        time: listItem[index]['time'],
-                        color: listItem[index]['color'],
-                        lastMessage: listItem[index]['lastmessage'],
-                        text: listItem[index]['lastmessage'],
-                      ),
-                    ),
-                  ],
-                );
-              },
-            );
-          } else {
-            return Center(
+      body: _query == null
+          ? Center(
               child: CircularProgressIndicator(),
-            );
-          }
-        },
-      ),
+            )
+          : StreamBuilder(
+              stream: valueQuery.onValue,
+              builder: (BuildContext context, AsyncSnapshot snapshot) {
+                if (snapshot.hasData && !snapshot.hasError && snapshot.data.snapshot.value != null) {
+                  List listItem = [];
+                  Map<dynamic, dynamic> item = snapshot.data.snapshot.value;
+                  final now = DateTime.now();
+                  item.forEach(
+                    (key, value) {
+                      listItem.add(value);
+                    },
+                  );
+                  listItem.sort((a, b) => b["time"].compareTo(a["time"]));
+                  return ListView.builder(
+                    itemCount: listItem.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      return Row(
+                        children: [
+                          Expanded(
+                            child: ChatItem(
+                              friendId: listItem[index]['userId'].toString(),
+                              name: listItem[index]['fullname'],
+                              count: listItem[index]['unseen'],
+                              time: listItem[index]['time'],
+                              color: listItem[index]['color'],
+                              lastMessage: listItem[index]['lastmessage'],
+                              text: listItem[index]['lastmessage'],
+                            ),
+                          ),
+                        ],
+                      );
+                    },
+                  );
+                } else if (snapshot.connectionState == ConnectionState.waiting) {
+                  return Center(
+                    child: CircularProgressIndicator(),
+                  );
+                } else {
+                  return Center(
+                    child: CircularProgressIndicator(),
+                  );
+                }
+              },
+            ),
     );
   }
 }

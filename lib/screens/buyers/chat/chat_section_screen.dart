@@ -151,7 +151,10 @@ class _ChatSectionScreenState extends State<ChatSectionScreen> {
 
                               return snap.data.snapshot.value == null && _data.length == 0
                                   ? Center(
-                                      child: Text("no message $hostIdMe"),
+                                      child: Text(
+                                        "no message",
+                                        style: TextStyle(fontSize: 20.0),
+                                      ),
                                     )
                                   : ListView.builder(
                                       physics: BouncingScrollPhysics(),
@@ -292,8 +295,8 @@ class _ChatSectionScreenState extends State<ChatSectionScreen> {
                                         color: Colors.white,
                                       ),
                                       onPressed: () {
+                                        if (_controllerText.text == null || _controllerText.text.isEmpty) return;
                                         sendMessage(_controllerText.text, args);
-
                                         _controllerText.clear();
                                       },
                                     ),
